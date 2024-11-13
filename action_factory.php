@@ -14,23 +14,30 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
- * SOAP server related capabilities
+ * Action factory.
  *
- * @package    webservice_soap
- * @category   access
- * @copyright  2009 Petr Skodak
+ * @package    core_calendar
+ * @copyright  2017 Cameron Ball <cameron@cameron1729.xyz>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$capabilities = array(
+namespace core_calendar;
 
-    'webservice/soap:use' => array(
-        'captype' => 'read', // in fact this may be considered read and write at the same time
-        'contextlevel' => CONTEXT_COURSE, // the context level should be probably CONTEXT_MODULE
-        'archetypes' => array(
-        ),
-    ),
+defined('MOODLE_INTERNAL') || die();
 
-);
+use core_calendar\local\event\factories\action_factory_interface;
+use core_calendar\local\event\value_objects\action;
+
+/**
+ * Action factory class.
+ *
+ * @copyright 2017 Cameron Ball <cameron@cameron1729.xyz>
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class action_factory implements action_factory_interface {
+
+    public function create_instance($name, \moodle_url $url, $itemcount, $actionable) {
+        return new action ($name, $url, $itemcount, $actionable);
+    }
+}

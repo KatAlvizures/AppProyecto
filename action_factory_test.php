@@ -14,23 +14,30 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+namespace core_calendar;
+
+use core_calendar\local\event\entities\action_interface;
 
 /**
- * SOAP server related capabilities
+ * Action factory testcase.
  *
- * @package    webservice_soap
- * @category   access
- * @copyright  2009 Petr Skodak
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    core_calendar
+ * @copyright 2017 Cameron Ball <cameron@cameron1729.xyz>
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+class action_factory_test extends \advanced_testcase {
+    /**
+     * Test action factory.
+     */
+    public function test_action_factory(): void {
+        $factory = new action_factory();
+        $instance = $factory->create_instance(
+            'test',
+            new \moodle_url('http://example.com'),
+            1729,
+            true
+        );
 
-$capabilities = array(
-
-    'webservice/soap:use' => array(
-        'captype' => 'read', // in fact this may be considered read and write at the same time
-        'contextlevel' => CONTEXT_COURSE, // the context level should be probably CONTEXT_MODULE
-        'archetypes' => array(
-        ),
-    ),
-
-);
+        $this->assertInstanceOf(action_interface::class, $instance);
+    }
+}

@@ -14,23 +14,29 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
- * SOAP server related capabilities
+ * Calendar action event interface.
  *
- * @package    webservice_soap
- * @category   access
- * @copyright  2009 Petr Skodak
+ * @package    core_calendar
+ * @copyright  2017 Cameron Ball <cameron@cameron1729.xyz>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$capabilities = array(
+namespace core_calendar\local\event\entities;
 
-    'webservice/soap:use' => array(
-        'captype' => 'read', // in fact this may be considered read and write at the same time
-        'contextlevel' => CONTEXT_COURSE, // the context level should be probably CONTEXT_MODULE
-        'archetypes' => array(
-        ),
-    ),
+defined('MOODLE_INTERNAL') || die();
 
-);
+/**
+ * Interface for an action event class.
+ *
+ * @copyright  2017 Cameron Ball <cameron@cameron1729.xyz>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+interface action_event_interface extends event_interface {
+    /**
+     * Get the action event's action.
+     *
+     * @return action_interface
+     */
+    public function get_action();
+}

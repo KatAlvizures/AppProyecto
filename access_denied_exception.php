@@ -14,23 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+namespace core\exception;
+
+use core\router\response\access_denied_response;
 
 /**
- * SOAP server related capabilities
+ * An exception to describe the case where access has been denied to a resource.
  *
- * @package    webservice_soap
- * @category   access
- * @copyright  2009 Petr Skodak
+ * @package    core
+ * @copyright  Andrew Lyons <andrew@nicols.co.uk>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-$capabilities = array(
-
-    'webservice/soap:use' => array(
-        'captype' => 'read', // in fact this may be considered read and write at the same time
-        'contextlevel' => CONTEXT_COURSE, // the context level should be probably CONTEXT_MODULE
-        'archetypes' => array(
-        ),
-    ),
-
-);
+class access_denied_exception extends moodle_exception implements response_aware_exception {
+    #[\Override]
+    public function get_response_classname(): string {
+        return access_denied_response::class;
+    }
+}
